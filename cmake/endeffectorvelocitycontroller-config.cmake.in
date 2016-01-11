@@ -1,0 +1,54 @@
+# EndEffectorVelocityController CMake config file
+#
+# This file sets the following variables:
+# EndEffectorVelocityController_FOUND - Always TRUE.
+# EndEffectorVelocityController_INCLUDE_DIRS - Directories containing the EndEffectorVelocityController include files.
+# EndEffectorVelocityController_IDL_DIRS - Directories containing the EndEffectorVelocityController IDL files.
+# EndEffectorVelocityController_LIBRARIES - Libraries needed to use EndEffectorVelocityController.
+# EndEffectorVelocityController_DEFINITIONS - Compiler flags for EndEffectorVelocityController.
+# EndEffectorVelocityController_VERSION - The version of EndEffectorVelocityController found.
+# EndEffectorVelocityController_VERSION_MAJOR - The major version of EndEffectorVelocityController found.
+# EndEffectorVelocityController_VERSION_MINOR - The minor version of EndEffectorVelocityController found.
+# EndEffectorVelocityController_VERSION_REVISION - The revision version of EndEffectorVelocityController found.
+# EndEffectorVelocityController_VERSION_CANDIDATE - The candidate version of EndEffectorVelocityController found.
+
+message(STATUS "Found EndEffectorVelocityController-@PROJECT_VERSION@")
+set(EndEffectorVelocityController_FOUND TRUE)
+
+find_package(<dependency> REQUIRED)
+
+#set(EndEffectorVelocityController_INCLUDE_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@"
+#    ${<dependency>_INCLUDE_DIRS}
+#    )
+#
+#set(EndEffectorVelocityController_IDL_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@/idl")
+set(EndEffectorVelocityController_INCLUDE_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@"
+    ${<dependency>_INCLUDE_DIRS}
+    )
+set(EndEffectorVelocityController_IDL_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@/idl")
+
+
+if(WIN32)
+    set(EndEffectorVelocityController_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_STATIC_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+else(WIN32)
+    set(EndEffectorVelocityController_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_SHARED_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+endif(WIN32)
+
+set(EndEffectorVelocityController_DEFINITIONS ${<dependency>_DEFINITIONS})
+
+set(EndEffectorVelocityController_VERSION @PROJECT_VERSION@)
+set(EndEffectorVelocityController_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(EndEffectorVelocityController_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(EndEffectorVelocityController_VERSION_REVISION @PROJECT_VERSION_REVISION@)
+set(EndEffectorVelocityController_VERSION_CANDIDATE @PROJECT_VERSION_CANDIDATE@)
+
