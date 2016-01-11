@@ -205,16 +205,16 @@ class EndEffectorVelocityController(OpenRTM_aist.DataFlowComponentBase):
 	#	#
 	def onExecute(self, ec_id):
 		if self._velocityIn.isNew():
-			tk0 = self._d_velocity.tm.sec + self._d_velocity.tm.usec / 1000000.0 
+			tk0 = self._d_velocity.tm.sec + self._d_velocity.tm.nsec / 1000000000.0 
 			vx= self._d_velocity.data.vx
 			vy= self._d_velocity.data.vy
 			vz= self._d_velocity.data.vz
-			wr= self._d_velocity.data.wr
-			wp= self._d_velocity.data.wp
-			wy= self._d_velocity.data.wy
+			wr= self._d_velocity.data.vr
+			wp= self._d_velocity.data.vp
+			wy= self._d_velocity.data.va
 
 			self._d_velocity = self._velocityIn.read()
-			tk1 = self._d_velocity.tm.sec + self._d_velocity.tm.usec / 1000000.0 
+			tk1 = self._d_velocity.tm.sec + self._d_velocity.tm.nsec / 1000000000.0 
 			dt = tk1 - tk0
 			
 			dx = vx * dt
@@ -223,7 +223,7 @@ class EndEffectorVelocityController(OpenRTM_aist.DataFlowComponentBase):
 			droll = wr * dt
 			dpitch = wp * dt
 			dyaw = wy * dt
-			carPoint = JAVA_ARM.CarPosWithElbow([[1,0,0,dx],[0,1,0,dy],[0,0,1,dz]], 0.0, 0)
+			carPoint = JARA_ARM.CarPosWithElbow([[1,0,0,dx],[0,1,0,dy],[0,0,1,dz]], 0.0, 0)
 			print carPoint
 			#self._manipMiddle._ptr().movePTPCartesianRel(carPoint)
 			
