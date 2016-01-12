@@ -225,7 +225,7 @@ class EndEffectorVelocityController(OpenRTM_aist.DataFlowComponentBase):
 			dyaw = wy * dt
 			carPoint = JARA_ARM.CarPosWithElbow([[1,0,0,dx],[0,1,0,dy],[0,0,1,dz]], 0.0, 0)
 			print carPoint
-			#self._manipMiddle._ptr().movePTPCartesianRel(carPoint)
+			self._manipMiddle._ptr().movePTPCartesianRel(carPoint)
 			
 		return RTC.RTC_OK
 	
