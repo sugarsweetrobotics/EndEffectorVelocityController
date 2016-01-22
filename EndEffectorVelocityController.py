@@ -174,9 +174,11 @@ class EndEffectorVelocityController(OpenRTM_aist.DataFlowComponentBase):
 	#	#
 	#	#
 	def onActivated(self, ec_id):
-		if self._velocityIn.isNew():
-			self._d_velocity = self._velocityIn.read()
-
+                while not self._velocityIn.isNew():
+                        print '[RTC.EndEffectorVelocityController] Waiting for the First Velocity data.'
+                
+		self._d_velocity = self._velocityIn.read()
+                print '[RTC.EndEffectorVelocityController] Velocity = ', self._d_velocity
 		return RTC.RTC_OK
 	
 	#	##
@@ -214,8 +216,10 @@ class EndEffectorVelocityController(OpenRTM_aist.DataFlowComponentBase):
 			wy= self._d_velocity.data.va
 
 			self._d_velocity = self._velocityIn.read()
+                        print '[RTC.EndEffectorVelocityController] Velocity = ', self._d_velocity
 			tk1 = self._d_velocity.tm.sec + self._d_velocity.tm.nsec / 1000000000.0 
 			dt = tk1 - tk0
+                        print '[RTC.EndEffectorVelocityController] Delta Time = ', dt
 			
 			dx = vx * dt
 			dy = vy * dt
@@ -224,7 +228,7 @@ class EndEffectorVelocityController(OpenRTM_aist.DataFlowComponentBase):
 			dpitch = wp * dt
 			dyaw = wy * dt
 			carPoint = JARA_ARM.CarPosWithElbow([[1,0,0,dx],[0,1,0,dy],[0,0,1,dz]], 0.0, 0)
-			print carPoint
+			print '[RTC.EndEffectorVelocityController] Calling movePTPCartesianRel with ', carPoint
 			self._manipMiddle._ptr().movePTPCartesianRel(carPoint)
 			
 		return RTC.RTC_OK
